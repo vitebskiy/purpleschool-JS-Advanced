@@ -22,8 +22,7 @@ console.log(rollDice("D16"));
 // 2 реализация кода.
 
 function roll(dice) {
-  const result = Math.floor(Math.random() * dice + 1);
-  return result;
+ return Math.floor(Math.random() * dice) + 1;
 }
 
 console.log(roll(20));
