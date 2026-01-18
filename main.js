@@ -1,22 +1,42 @@
 "use strict";
 
-const target = new Date(2027, 0, 1, 0, 0, 0, 0);
 const app = document.querySelector(".app");
+const target = new Date(2027, 0, 1, 0, 0, 0);
 
-let interval = setInterval(() => {
+function tick() {
   const now = new Date();
-  const diffMs = target - now;
+  let diffMs = target - now;
 
   if (diffMs <= 0) {
-    console.log("С Новым годом!");
+    app.textContent = "С Новым годом!";
+    clearInterval(timer);
     return;
   }
 
-  const seconds = Math.floor(diffMs / 1000) % 60;
-  const minutes = Math.floor(diffMs / (1000 * 60)) % 60;
-  const hours = Math.floor(diffMs / (1000 * 60 * 60)) % 24;
-  const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const MS = 1000;
+  const MIN = 60 * MS;
+  const HOUR = 60 * MIN;
+  const DAY = 24 * HOUR;
+  const MONTH = 30 * DAY; // ❗ условный месяц
 
+  const months = Math.floor(diffMs / MONTH);
+  diffMs %= MONTH;
 
-  app.textContent = `${days} дней, ${hours} часов, ${minutes} минут, ${seconds} секунд`;
-}, 1000);
+  const days = Math.floor(diffMs / DAY);
+  diffMs %= DAY;
+
+  const hours = Math.floor(diffMs / HOUR);
+  diffMs %= HOUR;
+
+  const minutes = Math.floor(diffMs / MIN);
+  diffMs %= MIN;
+
+  const seconds = Math.floor(diffMs / MS);
+
+  app.textContent =
+    `${months} месяцев, ${days} дней, ` +
+    `${hours} часов, ${minutes} минут, ${seconds} секунд`;
+}
+
+tick();
+const timer = setInterval(tick, 1000);
