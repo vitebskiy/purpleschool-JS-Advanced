@@ -1,19 +1,22 @@
 "use strict";
 
-function validationAge(dateString) {
-  const birthDate = new Date(dateString);
+const target = new Date(2027, 0, 1, 0, 0, 0, 0);
+const app = document.querySelector(".app");
+
+let interval = setInterval(() => {
   const now = new Date();
+  const diffMs = target - now;
 
-  let age = now.getFullYear() - birthDate.getFullYear();
-
-  const monthDiff = now.getMonth() - birthDate.getMonth();
-  const dayDiff = now.getDate() - birthDate.getDate();
-
-  if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-    age -= 1;
+  if (diffMs <= 0) {
+    console.log("С Новым годом!");
+    return;
   }
 
-  return age > 14;
-}
+  const seconds = Math.floor(diffMs / 1000) % 60;
+  const minutes = Math.floor(diffMs / (1000 * 60)) % 60;
+  const hours = Math.floor(diffMs / (1000 * 60 * 60)) % 24;
+  const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-console.log(validationAge("2022-01-01")); 
+
+  app.textContent = `${days} дней, ${hours} часов, ${minutes} минут, ${seconds} секунд`;
+}, 1000);
