@@ -1,5 +1,6 @@
 "use strict";
 
+/* ===== Базовый класс Персонаж ===== */
 function Character(race, name, language) {
   this.race = race;
   this.name = name;
@@ -7,7 +8,7 @@ function Character(race, name, language) {
 }
 
 Character.prototype.speak = function () {
-  return console.log(`${this.language}, ${this.name}`);
+  console.log(`${this.name} speaks ${this.language}`);
 };
 
 /* ===== Класс Орк ===== */
@@ -18,23 +19,32 @@ function Ork(name, language, weapon) {
   this.weapon = weapon;
 }
 
-// наследуем методы Персонажа
 Ork.prototype = Object.create(Character.prototype);
 
 Ork.prototype.attack = function () {
   console.log(`${this.name} attacks with ${this.weapon}`);
 };
 
-Ork.prototype.spell = function () {
-  console.log(`${this.name} uses a spell`);
-};
+/* ===== Класс Эльф ===== */
+function Elf(name, language, spellType) {
+  this.race = "Elf";
+  this.name = name;
+  this.language = language;
+  this.spellType = spellType;
+}
 
-Ork.prototype.createSpell = function () {
-  console.log(`${this.name} creates a spell`);
+Elf.prototype = Object.create(Character.prototype);
+
+Elf.prototype.createSpell = function () {
+  console.log(`${this.name} creates a ${this.spellType} spell`);
 };
 
 /* ===== Использование ===== */
 const ork = new Ork("Grom", "Orcish", "Axe");
+const elf = new Elf("Elrion", "Elvish", "Fire");
 
-console.log(ork);
-ork.attack()
+ork.speak();
+ork.attack();
+
+elf.speak();
+elf.createSpell();
