@@ -30,6 +30,6 @@ console.log(car);
 
 car.changeMiles = 7500;
 
-car.info;
+car.info();
 
 console.log(car);
