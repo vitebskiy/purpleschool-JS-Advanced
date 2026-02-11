@@ -22,7 +22,7 @@ class Ork extends Character {
     return console.log(`${this.name} attacks with ${this.weapon}`);
   }
 
-  speak() {
+  speek() {
     console.log(`${this.name} speaks ${this.language}`);
   }
 }
@@ -37,7 +37,7 @@ class Elf extends Character {
     console.log(`${this.name} creates a ${this.spellType} spell`);
   }
 
-  speak() {
+  speek() {
     console.log(`${this.name} speaks ${this.language}`);
   }
 }
@@ -46,8 +46,8 @@ class Elf extends Character {
 const ork = new Ork("Grom", "Orcish", "Axe");
 const elf = new Elf("Elrion", "Elvish", "Fire");
 
-ork.speak();
+ork.speek();
 ork.attack();
 
-elf.speak();
+elf.speek();
 elf.createSpell();
