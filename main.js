@@ -1,35 +1,53 @@
 "use strict";
 
-class Car {
-  #brend;
-  #model;
-  #miles;
-
-  constructor(brend, model, miles) {
-    this.#brend = brend;
-    this.#model = model;
-    this.#miles = miles;
+class Character {
+  constructor(race, name, language) {
+    this.race = race;
+    this.name = name;
+    this.language = language;
   }
 
-  get changeMiles() {
-    return this.#miles;
-  }
-
-  set changeMiles(miles) {
-    this.#miles = miles;
-  }
-
-  info() {
-    return console.log(`Марка ${this.#brend}, модель ${this.#model}, ${this.#miles}`);
+  speek() {
+    return console.log(`${this.name} speaks ${this.language}`);
   }
 }
 
-const car = new Car("Ford", "Focus", 6000);
+class Ork extends Character {
+  constructor(name, language, weapon) {
+    super("Ork", name, language);
+    this.weapon = weapon;
+  }
 
-console.log(car);
+  attack() {
+    return console.log(`${this.name} attacks with ${this.weapon}`);
+  }
 
-car.changeMiles = 7500;
+  speak() {
+    console.log(`${this.name} speaks ${this.language}`);
+  }
+}
 
-car.info();
+class Elf extends Character {
+  constructor(name, language, spellType) {
+    super("Elf", name, language);
+    this.spellType = spellType;
+  }
 
-console.log(car);
+  createSpell() {
+    console.log(`${this.name} creates a ${this.spellType} spell`);
+  }
+
+  speak() {
+    console.log(`${this.name} speaks ${this.language}`);
+  }
+}
+
+/* ===== Использование ===== */
+const ork = new Ork("Grom", "Orcish", "Axe");
+const elf = new Elf("Elrion", "Elvish", "Fire");
+
+ork.speak();
+ork.attack();
+
+elf.speak();
+elf.createSpell();
