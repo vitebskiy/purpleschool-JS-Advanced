@@ -1,53 +1,52 @@
 "use strict";
 
-class Character {
-  constructor(race, name, language) {
-    this.race = race;
-    this.name = name;
-    this.language = language;
+class Billing {
+  constructor(amount) {
+    this.amount = amount;
   }
 
-  speek() {
-    return console.log(`${this.name} speaks ${this.language}`);
+  calculateTotal() {
+    throw new Error("Method calculateTotal() must be implemented in subclass");
   }
 }
 
-class Ork extends Character {
-  constructor(name, language, weapon) {
-    super("Ork", name, language);
-    this.weapon = weapon;
-  }
-
-  attack() {
-    return console.log(`${this.name} attacks with ${this.weapon}`);
-  }
-
-  speek() {
-    console.log(`${this.name} speaks ${this.language}`);
+class FixBilling extends Billing {
+  calculateTotal() {
+    return this.amount;
   }
 }
 
-class Elf extends Character {
-  constructor(name, language, spellType) {
-    super("Elf", name, language);
-    this.spellType = spellType;
+class HourBilling extends Billing {
+  constructor(amount, hours) {
+    super(amount);
+    this.hour = hours;
   }
 
-  createSpell() {
-    console.log(`${this.name} creates a ${this.spellType} spell`);
-  }
-
-  speek() {
-    console.log(`${this.name} speaks ${this.language}`);
+  calculateTotal() {
+    return this.amount * this.hour;
   }
 }
 
-/* ===== Использование ===== */
-const ork = new Ork("Grom", "Orcish", "Axe");
-const elf = new Elf("Elrion", "Elvish", "Fire");
+class ItemBilling extends Billing {
+  constructor(amount, elements) {
+    super(amount);
+    this.elements = elements;
+  }
 
-ork.speek();
-ork.attack();
+  calculateTotal() {
+    return this.amount * this.elements;
+  }
+}
 
-elf.speek();
-elf.createSpell();
+// const amount = new Billing(222)
+// amount.calculateTotal()
+// console.log(amount);
+
+const fix = new FixBilling(300);
+console.log(fix.calculateTotal());
+
+const hour = new HourBilling(100, 8);
+console.log(hour.calculateTotal());
+
+const item = new ItemBilling(20, 5);
+console.log(item.calculateTotal());
