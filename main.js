@@ -1,52 +1,28 @@
 "use strict";
 
-class Billing {
-  constructor(amount) {
-    this.amount = amount;
-  }
+const url = "https://pokeapi.co/api/v2/pokemon/ditto";
+const request = new XMLHttpRequest();
 
-  calculateTotal() {
-    throw new Error("Method calculateTotal() must be implemented in subclass");
-  }
-}
+request.open("GET", url);
+request.send();
 
-class FixBilling extends Billing {
-  calculateTotal() {
-    return this.amount;
-  }
-}
+request.addEventListener("load", function () {
+  const { abilities } = JSON.parse(this.response);
+  const result = abilities[0].ability.url;
 
-class HourBilling extends Billing {
-  constructor(amount, hours) {
-    super(amount);
-    this.hour = hours;
-  }
 
-  calculateTotal() {
-    return this.amount * this.hour;
-  }
-}
+  // console.log(result);
 
-class ItemBilling extends Billing {
-  constructor(amount, elements) {
-    super(amount);
-    this.elements = elements;
-  }
+  const request2 = new XMLHttpRequest();
 
-  calculateTotal() {
-    return this.amount * this.elements;
-  }
-}
+  request2.open("GET", result);
+  request2.send();
 
-// const amount = new Billing(222)
-// amount.calculateTotal()
-// console.log(amount);
+  request2.addEventListener("load", function () {
+    const {effect_entries} = JSON.parse(this.response);
 
-const fix = new FixBilling(300);
-console.log(fix.calculateTotal());
+    console.log(effect_entries[2].effect);
+  });
+});
 
-const hour = new HourBilling(100, 8);
-console.log(hour.calculateTotal());
-
-const item = new ItemBilling(20, 5);
-console.log(item.calculateTotal());
+// console.log(result);
