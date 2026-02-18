@@ -21,8 +21,13 @@ request.addEventListener("load", function () {
   request2.addEventListener("load", function () {
     const {effect_entries} = JSON.parse(this.response);
 
-    console.log(effect_entries[2].effect);
+    for (const element of effect_entries) {
+      if(element.language.name === 'en') {
+        console.log(element.effect);
+      }
+    }
+
+
   });
 });
 
-// console.log(result);
