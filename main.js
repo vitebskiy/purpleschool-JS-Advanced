@@ -1,28 +1,19 @@
 "use strict";
 
-const url = "https://pokeapi.co/api/v2/pokemon/ditto";
-const request = new XMLHttpRequest();
 
-request.open("GET", url);
-request.send();
+fetch("https://pokeapi.co/api/v2/pokemon/ditto")
+  .then((response) => response.json())
+  .then(({ abilities }) => {
+    const url = abilities[0].ability.url;
+    return fetch(url);
+  })
+  .then((response) => response.json())
+  .then((data) => {
+    const { effect_entries } = data;
 
-request.addEventListener("load", function () {
-  const { abilities } = JSON.parse(this.response);
-  const result = abilities[0].ability.url;
-
-
-  // console.log(result);
-
-  const request2 = new XMLHttpRequest();
-
-  request2.open("GET", result);
-  request2.send();
-
-  request2.addEventListener("load", function () {
-    const {effect_entries} = JSON.parse(this.response);
-
-    console.log(effect_entries[2].effect);
+    for (const element of effect_entries) {
+      if (element.language.name === "en") {
+        console.log(element.effect);
+      }
+    }
   });
-});
-
-// console.log(result);
