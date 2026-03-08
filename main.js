@@ -1,19 +1,28 @@
 "use strict";
 
+// Создать функцию race(), которая будет принимать массив Promise
+// , и возвращать первый успешно выполненный или отклоненный.
 
-fetch("https://pokeapi.co/api/v2/pokemon/ditto")
-  .then((response) => response.json())
-  .then(({ abilities }) => {
-    const url = abilities[0].ability.url;
-    return fetch(url);
-  })
-  .then((response) => response.json())
-  .then((data) => {
-    const { effect_entries } = data;
+function race(promises) {
+  return new Promise((resolve, reject) => {
+    for (const promise of promises) {
+      promise.then((value) => {
+        resolve(value);
+      });
 
-    for (const element of effect_entries) {
-      if (element.language.name === "en") {
-        console.log(element.effect);
-      }
+      promise.catch((error) => {
+        reject(error);
+      });
     }
   });
+}
+
+const p1 = new Promise((resolve) => setTimeout(() => resolve("First"), 300));
+
+const p2 = new Promise((resolve) => setTimeout(() => resolve("Second"), 100));
+
+const p3 = new Promise((reject) => setTimeout(() => reject("Error"), 200));
+
+race([p1, p2, p3])
+  .then((result) => console.log("Resolved", result))
+  .catch((err) => console.log("Rejected", err));
