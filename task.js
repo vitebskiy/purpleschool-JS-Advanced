@@ -9,7 +9,11 @@
 // }
 
 export class Task {
+  constructor(message) {
+    this.message = message;
+  }
+
   run() {
-    console.log("писать код ");
+    console.log(this.message);
   }
 }
